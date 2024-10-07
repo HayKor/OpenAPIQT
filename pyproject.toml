@@ -1,3 +1,24 @@
+[tool.poetry]
+name = "swaggerqt"
+version = "0.1.0"
+description = ""
+authors = ["Arthur <baginian.artur@yandex.ru>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+PyQt6 = "^6.7.1"
+PyYAML = "^6.0.2"
+
+[tool.poetry.group.dev.dependencies]
+black = "24.8.0"
+isort = "^5.13.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.isort]
 line_length = 80
 atomic = true
