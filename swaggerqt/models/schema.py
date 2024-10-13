@@ -11,6 +11,7 @@ class Schema(BaseModel):
     default: Optional[Any] = None
     required: Optional[list[str]] = None
     properties: Optional[dict[str, "Schema"]] = None
+    items: Optional["Schema"] | Optional[list["Schema"]] = None
 
     multipleOf: Optional[float] = None
     maximum: Optional[float] = None
