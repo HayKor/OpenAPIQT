@@ -7,7 +7,7 @@ from .external_docs import ExternalDocs
 from .info import Info
 from .paths import Path
 from .server import Server
-from .tags import Tags
+from .tags import Tag
 
 
 class OpenAPI(BaseModel):
@@ -15,7 +15,7 @@ class OpenAPI(BaseModel):
     info: Info
     externalDocs: Optional[ExternalDocs]
     servers: Optional[list[Server]]
-    tags: Optional[Tags]
+    tags: Optional[list[Tag]]
     paths: dict[str, Path]
     components: Optional[Components]
     security: Optional[list[dict[str, list[str]]]]
