@@ -11,7 +11,7 @@ class Operation(BaseModel):
     tags: list[str]
     summary: str
     description: str
-    externalDocs: Optional[ExternalDocs]
-    operationId: Optional[str]
-    requestBody: Optional[RequestBody]
+    externalDocs: Optional[ExternalDocs] = None
+    operationId: Optional[str] = None
+    requestBody: Optional[RequestBody] = None
     responses: dict[str, Response]

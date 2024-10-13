@@ -10,6 +10,7 @@ all = [
     "Response",
     "Schema",
     "Server",
+    "Tag",
 ]
 
 from .components import Components
@@ -23,3 +24,4 @@ from .request_body import RequestBody
 from .response import Response
 from .schema import Schema
 from .server import Server
+from .tags import Tag

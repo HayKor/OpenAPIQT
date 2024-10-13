@@ -6,8 +6,8 @@ from .operation import Operation
 
 
 class Path(BaseModel):
-    put: Optional[Operation]
-    post: Optional[Operation]
-    get: Optional[Operation]
-    delete: Optional[Operation]
-    patch: Optional[Operation]
+    put: Optional[Operation] = None
+    post: Optional[Operation] = None
+    get: Optional[Operation] = None
+    delete: Optional[Operation] = None
+    patch: Optional[Operation] = None

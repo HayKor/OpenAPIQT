@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 
 
 class MediaType(BaseModel):
-    _schema: Optional[dict[str, str]] = Field(alias="schema")
-    example: Optional[Any]
-    examples: Optional[dict[str, dict[str, Any]]]
-    encoding: Optional[dict[str, dict[str, Any]]]
+    schema_: Optional[dict[str, str]] = Field(default=None, alias="schema")
+    example: Optional[Any] = None
+    examples: Optional[dict[str, dict[str, Any]]] = None
+    encoding: Optional[dict[str, dict[str, Any]]] = None

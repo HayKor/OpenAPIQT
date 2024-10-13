@@ -6,6 +6,6 @@ from .media_type import MediaType
 
 
 class RequestBody(BaseModel):
-    description: Optional[str]
+    description: Optional[str] = None
     content: dict[str, MediaType]
-    required: Optional[bool]
+    required: Optional[bool] = None

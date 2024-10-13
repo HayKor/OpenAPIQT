@@ -8,4 +8,4 @@ from .media_type import MediaType
 class Response(BaseModel):
     description: str
     content: dict[str, MediaType]
-    headers: Optional[dict[str, dict[str, Any]]]
+    headers: Optional[dict[str, dict[str, Any]]] = None

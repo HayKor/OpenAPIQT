@@ -7,5 +7,5 @@ from .external_docs import ExternalDocs
 
 class Tag(BaseModel):
     name: str
-    description: Optional[str]
-    externalDocs: Optional[ExternalDocs]
+    description: Optional[str] = None
+    externalDocs: Optional[ExternalDocs] = None
