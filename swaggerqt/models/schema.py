@@ -1,8 +1,10 @@
 from typing import Any, Optional
 
 from pydantic import BaseModel
+from typing_extensions import deprecated
 
 
+@deprecated("Common `model.model_json_schema()` converted to dict is used")
 class Schema(BaseModel):
     type: Optional[str] = None
     format: Optional[str] = None
@@ -12,17 +14,3 @@ class Schema(BaseModel):
     required: Optional[list[str]] = None
     properties: Optional[dict[str, "Schema"]] = None
     items: Optional["Schema"] | Optional[list["Schema"]] = None
-
-    multipleOf: Optional[float] = None
-    maximum: Optional[float] = None
-    exclusiveMaximum: Optional[bool] = None
-    minimum: Optional[float] = None
-    exclusiveMinimum: Optional[bool] = None
-    maxLength: Optional[int] = None
-    minLength: Optional[int] = None
-    pattern: Optional[str] = None
-    maxItems: Optional[int] = None
-    minItems: Optional[int] = None
-    uniqueItems: Optional[bool] = None
-    maxProperties: Optional[int] = None
-    minProperties: Optional[int] = None

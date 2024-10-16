@@ -4,11 +4,10 @@ from pydantic import BaseModel
 
 from .request_body import RequestBody
 from .response import Response
-from .schema import Schema
 
 
 class Components(BaseModel):
-    schemas: Optional[dict[str, Schema]] = None
+    schemas: Optional[dict[str, dict[str, Any]]] = None
     responses: Optional[dict[str, Response]] = None
     parameters: Optional[dict[str, dict[str, Any]]] = None
     examples: Optional[dict[str, dict[str, Any]]] = None
