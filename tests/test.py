@@ -1,4 +1,17 @@
-from swaggerqt.models import *
+from swaggerqt.models import (
+    Components,
+    ExternalDocs,
+    Info,
+    MediaType,
+    OpenAPI,
+    Operation,
+    Path,
+    RequestBody,
+    Response,
+    Schema,
+    Server,
+    Tag,
+)
 
 
 openapi = OpenAPI(
@@ -191,16 +204,6 @@ def test_openapi_complex():
     assert openapi.paths["/products"].get.tags == ["products"]
     assert openapi.paths["/products"].get.summary == "Get all products"
 
-    # yaml_obj = yaml.dump(
-    #     openapi.model_dump(
-    #         exclude_unset=True,
-    #         exclude_none=True,
-    #         exclude_defaults=True,
-    #         by_alias=True,
-    #     ),
-    #     sort_keys=False,
-    # )
-    # print(yaml_obj)
 
-
-test_openapi_complex()
+if __name__ == "__main__":
+    test_openapi_complex()
