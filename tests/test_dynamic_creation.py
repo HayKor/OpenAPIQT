@@ -45,9 +45,9 @@ def parse_json_schema(
         default_value = ...
         example = None
 
-        if not prop in jschema.get("required", []):
-            prop_type = Optional[prop_type]
-            default_value = None
+        # if not prop in jschema.get("required", []):
+        #     prop_type = Optional[prop_type]
+        #     default_value = None
 
         if schema.get("example", None):
             example = schema.get("example")
