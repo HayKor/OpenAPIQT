@@ -1,4 +1,4 @@
-import json
+import logging
 
 import yaml
 
@@ -14,7 +14,16 @@ from swaggerqt.models import (
     Server,
     Tag,
 )
-from tests.test_dynamic_creation import parse_json_schema
+from swaggerqt.models.parsing.json_parsing import JsonParser
+
+
+# TODO: configure logging in all modules + add config
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s   %(name)-25s %(levelname)-8s %(message)s",
+)
+
+parser = JsonParser()
 
 
 openapi = OpenAPI(
@@ -42,26 +51,6 @@ openapi = OpenAPI(
     ],
     paths={
         "/users": Path(
-            get=Operation(
-                tags=["users"],
-                summary="Get all users",
-                description="Retrieve a list of all users",
-                responses={
-                    "200": Response(
-                        description="Users list",
-                        content={
-                            "application/json": {}
-                            # parse_json_schema(
-                            #     "TestModel",
-                            #     {
-                            #         "type": "array",
-                            #         "items": "User",
-                            #     },
-                            # )
-                        },
-                    )
-                },
-            ),
             post=Operation(
                 tags=["users"],
                 summary="Create a new user",
@@ -70,7 +59,7 @@ openapi = OpenAPI(
                     description="User data",
                     content={
                         "application/json": {
-                            "schema": parse_json_schema(
+                            "schema": parser.parse_json_schema(
                                 "User",
                                 {
                                     "type": "object",
@@ -92,7 +81,7 @@ openapi = OpenAPI(
                         description="User  created",
                         content={
                             "application/json": {
-                                "schema": parse_json_schema(
+                                "schema": parser.parse_json_schema(
                                     "User",
                                     {
                                         "type": "object",
@@ -114,6 +103,29 @@ openapi = OpenAPI(
                     )
                 },
             ),
+            get=Operation(
+                tags=["users"],
+                summary="Get all users",
+                description="Retrieve a list of all users",
+                responses={
+                    "200": Response(
+                        description="Users list",
+                        content={
+                            "application/json": {
+                                "schema": parser.parse_json_schema(
+                                    "govno",
+                                    {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "User",
+                                        },
+                                    },
+                                ).model_json_schema(),
+                            }
+                        },
+                    )
+                },
+            ),
         ),
         "/products": Path(
             get=Operation(
@@ -125,7 +137,7 @@ openapi = OpenAPI(
                         description="Products list",
                         content={
                             "application/json": {
-                                "schema": parse_json_schema(
+                                "schema": parser.parse_json_schema(
                                     "Product",
                                     {
                                         "type": "object",
@@ -151,7 +163,7 @@ openapi = OpenAPI(
     },
     components=Components(
         schemas={
-            "User": parse_json_schema(
+            "User": parser.parse_json_schema(
                 "User",
                 {
                     "type": "object",
@@ -168,7 +180,7 @@ openapi = OpenAPI(
                     },
                 },
             ).model_json_schema(),
-            "Product": parse_json_schema(
+            "Product": parser.parse_json_schema(
                 "Product",
                 {
                     "type": "object",
@@ -191,7 +203,7 @@ openapi = OpenAPI(
                 description="Error response",
                 content={
                     "application/json": {
-                        "schema": parse_json_schema(
+                        "schema": parser.parse_json_schema(
                             "Error",
                             {
                                 "type": "object",
@@ -211,7 +223,7 @@ openapi = OpenAPI(
                 description="User data",
                 content={
                     "application/json": {
-                        "schema": parse_json_schema(
+                        "schema": parser.parse_json_schema(
                             "User",
                             {
                                 "type": "object",
