@@ -1,18 +1,11 @@
 import json
-from typing import Any, Optional
+from typing import Any, Optional, Type
 
 from pydantic import BaseModel, Field, create_model
 from pydantic.json_schema import GenerateJsonSchema
 
 
-"""
-DynamicModel = create_model(
-    'DynamicModel',
-    foo=(str, Field(..., description='foo description', alias='FOO')),
-)
-"""
-
-type_dict: dict[str, type] = {
+TYPE_DICT: dict[str, Type] = {
     "string": str,
     "integer": int,
     "number": float,
@@ -28,18 +21,26 @@ class SkipDefs(GenerateJsonSchema):
         return json_schema
 
 
-def generate_dynamic_model(
+def parse_type(jschema: dict[str, Any]) -> Optional[Type[list | Any | object]]:
+    prop_type = TYPE_DICT.get(jschema.get("type", Any))
+
+    if prop_type == list:
+        prop_type = list[TYPE_DICT.get(jschema.get("items", Any), Any)]
+
+    return prop_type
+
+
+def parse_json_schema(
     model_name: str, jschema: dict[str, Any]
-) -> type[BaseModel]:
+) -> type[BaseModel] | Any:
     fields = {}
 
     if jschema.get("type") != "object":
-        pass
+        prop_type = parse_type(jschema)
+        return prop_type
 
     for prop, schema in jschema["properties"].items():
-        prop_type: type | Any = type_dict.get(schema["type"], Any)
-        if prop_type == list:
-            prop_type = list[schema.get("items", Any)]
+        prop_type = parse_type(schema)
 
         default_value = ...
         example = None
@@ -60,55 +61,65 @@ def generate_dynamic_model(
         )
 
     model = create_model(model_name, **fields)
-    type_dict[model.__name__] = model
+    TYPE_DICT[model.__name__] = model
 
     return model
 
 
-user_schema = {
-    "type": "object",
-    "properties": {
-        "id": {
-            "title": "Id",
-            "type": "integer",
+if __name__ == "__main__":
+    assert parse_type({"type": "array", "items": "string"}) == list[str]
+    user_schema = {
+        "type": "object",
+        "properties": {
+            "id": {
+                "title": "Id",
+                "type": "integer",
+            },
+            "name": {
+                "title": "Name",
+                "type": "string",
+                "example": "Arthur",
+            },
+            "age": {
+                "title": "Age",
+                "type": "integer",
+            },
         },
-        "name": {
-            "title": "Name",
-            "type": "string",
-            "example": "Arthur",
+        "required": [
+            "id",
+            "name",
+            "age",
+        ],
+    }
+
+    User = parse_json_schema("User", user_schema)
+
+    array_of_users_schema = {
+        "type": "object",
+        "properties": {
+            "users": {
+                "type": "array",
+                "items": "User",
+            }
         },
-        "age": {
-            "title": "Age",
-            "type": "integer",
-        },
-    },
-    "required": [
-        "id",
-        "name",
-    ],
-}
+        "required": "users",
+    }
 
-User = generate_dynamic_model("User", user_schema)
+    ArrayOfUsers = parse_json_schema("ArrayOfUsers", array_of_users_schema)
 
-array_of_users_schema = {
-    "type": "object",
-    "properties": {
-        "users": {
-            "type": "array",
-            "items": "User",
-        }
-    },
-    "required": "users",
-}
+    user_array = {
+        "type": "array",
+        "items": "User",
+    }
+    user_array = parse_json_schema("array", user_array)
+    print(user_array)
 
-ArrayOfUsers = generate_dynamic_model("ArrayOfUsers", array_of_users_schema)
-
-print(
-    json.dumps(
-        ArrayOfUsers.model_json_schema(
-            ref_template="#/components/schemas/{model}",
-            schema_generator=SkipDefs,
-        ),
-        indent=2,
+    print(
+        json.dumps(
+            ArrayOfUsers.model_json_schema(
+                ref_template="#/components/schemas/{model}",
+                schema_generator=SkipDefs,
+            ),
+            indent=2,
+        )
     )
-)
