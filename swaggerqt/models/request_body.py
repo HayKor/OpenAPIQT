@@ -1,11 +1,9 @@
-from typing import Optional
+from typing import Any, Optional
 
 from pydantic import BaseModel
-
-from .media_type import MediaType
 
 
 class RequestBody(BaseModel):
     description: Optional[str] = None
-    content: dict[str, MediaType]
+    content: dict[str, Any]
     required: Optional[bool] = None

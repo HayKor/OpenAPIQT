@@ -7,7 +7,7 @@ from .response import Response
 
 
 class Components(BaseModel):
-    schemas: Optional[dict[str, dict[str, Any]]] = None
+    schemas: Optional[dict[str, Any]] = None
     responses: Optional[dict[str, Response]] = None
     parameters: Optional[dict[str, dict[str, Any]]] = None
     examples: Optional[dict[str, dict[str, Any]]] = None
