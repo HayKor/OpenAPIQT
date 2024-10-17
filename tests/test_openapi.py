@@ -67,36 +67,14 @@ openapi = OpenAPI(
                 summary="Create a new user",
                 description="Create a new user",
                 requestBody=RequestBody(
-                    description="User  data",
+                    description="User data",
                     content={
-                        "application/json": parse_json_schema(
-                            "TestModel",
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                    },
-                                },
-                            },
-                        ).model_json_schema()
-                    },
-                ),
-                responses={
-                    "201": Response(
-                        description="User  created",
-                        content={
-                            "application/json": parse_json_schema(
-                                "TestModel",
+                        "application/json": {
+                            "schema": parse_json_schema(
+                                "User",
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "id": {
-                                            "type": "integer",
-                                        },
                                         "name": {
                                             "type": "string",
                                         },
@@ -106,6 +84,32 @@ openapi = OpenAPI(
                                     },
                                 },
                             ).model_json_schema()
+                        }
+                    },
+                ),
+                responses={
+                    "201": Response(
+                        description="User  created",
+                        content={
+                            "application/json": {
+                                "schema": parse_json_schema(
+                                    "User",
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                            },
+                                        },
+                                    },
+                                ).model_json_schema()
+                            }
                         },
                     )
                 },
@@ -120,23 +124,25 @@ openapi = OpenAPI(
                     "200": Response(
                         description="Products list",
                         content={
-                            "application/json": parse_json_schema(
-                                "TestModel",
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "id": {
-                                            "type": "string",
-                                        },
-                                        "name": {
-                                            "type": "string",
-                                        },
-                                        "price": {
-                                            "type": "integer",
+                            "application/json": {
+                                "schema": parse_json_schema(
+                                    "Product",
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string",
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                            },
+                                            "price": {
+                                                "type": "integer",
+                                            },
                                         },
                                     },
-                                },
-                            ).model_json_schema()
+                                ).model_json_schema()
+                            }
                         },
                     )
                 },
@@ -146,7 +152,7 @@ openapi = OpenAPI(
     components=Components(
         schemas={
             "User": parse_json_schema(
-                "TestModel",
+                "User",
                 {
                     "type": "object",
                     "properties": {
@@ -163,7 +169,7 @@ openapi = OpenAPI(
                 },
             ).model_json_schema(),
             "Product": parse_json_schema(
-                "TestModel",
+                "Product",
                 {
                     "type": "object",
                     "properties": {
@@ -184,17 +190,19 @@ openapi = OpenAPI(
             "Error": Response(
                 description="Error response",
                 content={
-                    "application/json": parse_json_schema(
-                        "TestModel",
-                        {
-                            "type": "object",
-                            "properties": {
-                                "message": {
-                                    "type": "string",
+                    "application/json": {
+                        "schema": parse_json_schema(
+                            "Error",
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                    },
                                 },
                             },
-                        },
-                    ).model_json_schema()
+                        ).model_json_schema()
+                    }
                 },
             )
         },
@@ -202,23 +210,25 @@ openapi = OpenAPI(
             "User": RequestBody(
                 description="User data",
                 content={
-                    "application/json": parse_json_schema(
-                        "TestModel",
-                        {
-                            "type": "object",
-                            "properties": {
-                                "id": {
-                                    "type": "integer",
-                                },
-                                "name": {
-                                    "type": "string",
-                                },
-                                "email": {
-                                    "type": "string",
+                    "application/json": {
+                        "schema": parse_json_schema(
+                            "User",
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                    },
                                 },
                             },
-                        },
-                    ).model_json_schema()
+                        ).model_json_schema()
+                    }
                 },
             )
         },
