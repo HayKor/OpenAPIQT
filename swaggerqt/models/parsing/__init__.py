@@ -1,1 +1,1 @@
-from parsing import JsonParser, SkipDefs
+from .json_parsing import JsonParser, SkipDefs
