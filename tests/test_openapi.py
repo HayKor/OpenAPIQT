@@ -15,16 +15,12 @@ from swaggerqt.models import (
     Tag,
 )
 from swaggerqt.models.parsing.json_parsing import JsonParser
+from swaggerqt.settings.logging_config import configure_logging
 
 
-# TODO: configure logging in all modules + add config
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s   %(name)-25s %(levelname)-8s %(message)s",
-)
+configure_logging(logging.DEBUG)
 
 parser = JsonParser()
-
 
 openapi = OpenAPI(
     openapi="3.0.0",
