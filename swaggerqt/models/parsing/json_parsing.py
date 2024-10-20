@@ -44,13 +44,13 @@ class JsonParser:
 
         prop_type = self._type_dict.get(jschema.get("type", Any), Any)
 
-        logging.debug(f"Parsed type of {prop_type=}")
+        logging.debug("Parsed type of prop_type=%s", prop_type)
 
         if prop_type == list:
             items_type = self._type_dict.get(jschema["items"].get("type", Any))
             prop_type = list[items_type]
 
-            logging.debug(f"Parsed items_type of {items_type}")
+            logging.debug("Parsed list type of prop_type=%s", prop_type)
 
         return prop_type
 
@@ -65,7 +65,11 @@ class JsonParser:
 
         if jschema.get("type", Any) != "object":
             prop_type = self.parse_type(jschema)
-            logging.debug(f"{model_name=} {prop_type=}")
+            logging.info(
+                "Created RootModel of %s with name %s",
+                prop_type,
+                model_name,
+            )
 
             model = RootModel[prop_type]
             model.__name__ = model_name
@@ -86,8 +90,10 @@ class JsonParser:
             )
 
         model = create_model(model_name, **fields)
-        logging.debug(
-            f"Created model with name {model_name} and fields {fields}"
+        logging.info(
+            "Created BaseModel with name %s and fields %s",
+            model_name,
+            fields.keys(),
         )
 
         # TODO: save to DB or smth
