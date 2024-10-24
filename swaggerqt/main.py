@@ -1,7 +1,7 @@
 import logging
 import sys
 
-from app.window import MainWindow
+from app.main_window import MainWindow
 from PyQt6.QtWidgets import QApplication
 from settings import configure_logging, except_hook
 
