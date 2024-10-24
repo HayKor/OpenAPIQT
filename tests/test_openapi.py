@@ -249,14 +249,6 @@ def test_openapi_complex():
 
 
 if __name__ == "__main__":
-    #
-    # print(
-    #     openapi.model_dump_json(
-    #         exclude_none=True,
-    #         exclude_unset=True,
-    #     )
-    # )
-
     print(
         yaml.safe_dump(
             openapi.model_dump(
@@ -268,15 +260,3 @@ if __name__ == "__main__":
             sort_keys=False,
         )
     )
-
-    # print(
-    #     json.dumps(
-    #         openapi.model_dump(
-    #             exclude_none=True,
-    #             exclude_unset=True,
-    #         ),
-    #         indent=2,
-    #     )
-    # )
-    #
-    test_openapi_complex()
