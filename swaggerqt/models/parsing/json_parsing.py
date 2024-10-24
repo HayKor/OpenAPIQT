@@ -32,6 +32,7 @@ class JsonParser:
             "boolean": bool,
             "array": list,
         }
+        logging.debug("JsonParser has initialized")
 
     def parse_type(
         self,
