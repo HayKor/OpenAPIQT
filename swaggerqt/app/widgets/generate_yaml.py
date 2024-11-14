@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import QWidget
 
 
 class GenerateYAML(QWidget, Ui_GenerateYAML):
-    def __init__(self, parent=None):
-        super().__init__(parent)
+    def __init__(self):
+        super().__init__()
         self.setupUi(self)
-        logging.debug("Window '%s' has initialized", self.__class__.__name__)
+        logging.debug("Widget '%s' has initialized", self.__class__.__name__)
