@@ -2,6 +2,7 @@ import logging
 
 from app.ui.schema_manager_ui import Ui_SchemaManager
 from app.widgets.property_field import PropertyField
+from models.parsing import JsonParser
 from PyQt6.QtWidgets import QWidget
 
 
@@ -10,6 +11,9 @@ class SchemaManager(QWidget, Ui_SchemaManager):
         super().__init__()
         self.setupUi(self)
         logging.debug("Widget '%s' has initialized", self.__class__.__name__)
+
+        # Init parser
+        self.parser = JsonParser()
 
         # Initial field
         self.add_property_field()
