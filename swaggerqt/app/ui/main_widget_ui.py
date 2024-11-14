@@ -54,7 +54,9 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.request_schema_combo, 7, 0, 1, 1)
         self.http_method_combo = QtWidgets.QComboBox(parent=self.widget)
         self.http_method_combo.setObjectName("http_method_combo")
-        self.http_method_combo.addItems(["GET", "POST", "PUT", "PATCH", "DELETE"])
+        self.http_method_combo.addItems(
+            ["GET", "POST", "PUT", "PATCH", "DELETE"]
+        )
         self.gridLayout.addWidget(self.http_method_combo, 5, 0, 1, 1)
         self.title_input = QtWidgets.QLineEdit(parent=self.widget)
         self.title_input.setObjectName("title_input")
@@ -121,9 +123,13 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "HTTP Method"))
         self.label.setText(_translate("MainWindow", "Project title"))
         self.label_4.setText(_translate("MainWindow", "Response Code"))
-        self.generate_yaml_btn.setText(_translate("MainWindow", "Generate YAML"))
+        self.generate_yaml_btn.setText(
+            _translate("MainWindow", "Generate YAML")
+        )
         self.delete_path_btn.setText(_translate("MainWindow", "Delete Path"))
         self.abb_path_btn.setText(_translate("MainWindow", "Add Path"))
         self.label_7.setText(_translate("MainWindow", "Tag"))
         self.label_8.setText(_translate("MainWindow", "Paths:"))
-        self.manage_schemas_btn.setText(_translate("MainWindow", "Manage Schemas"))
+        self.manage_schemas_btn.setText(
+            _translate("MainWindow", "Manage Schemas")
+        )
