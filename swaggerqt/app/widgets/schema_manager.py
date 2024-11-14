@@ -1,3 +1,5 @@
+import logging
+
 from app.ui.schema_manager_ui import Ui_SchemaManager
 from app.widgets.property_field import PropertyField
 from PyQt6.QtWidgets import QWidget
@@ -7,6 +9,7 @@ class SchemaManager(QWidget, Ui_SchemaManager):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        logging.debug("Widget '%s' has initialized", self.__class__.__name__)
 
         # Initial field
         self.add_property_field()
