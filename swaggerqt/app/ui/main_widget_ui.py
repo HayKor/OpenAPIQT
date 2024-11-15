@@ -78,8 +78,10 @@ class Ui_MainWidget(object):
         self.abb_path_btn = QtWidgets.QPushButton(parent=self.widget1)
         self.abb_path_btn.setObjectName("abb_path_btn")
         self.gridLayout_2.addWidget(self.abb_path_btn, 5, 0, 1, 1)
-        self.path_list = QtWidgets.QListWidget(parent=self.widget1)
+
+        self.path_list = QtWidgets.QListView(parent=self.widget1)
         self.path_list.setObjectName("path_list")
+
         self.gridLayout_2.addWidget(self.path_list, 4, 0, 1, 2)
         self.tag_input = QtWidgets.QLineEdit(parent=self.widget1)
         self.tag_input.setObjectName("tag_input")
