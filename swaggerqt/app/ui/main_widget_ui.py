@@ -133,3 +133,14 @@ class Ui_MainWidget(object):
         self.manage_schemas_btn.setText(
             _translate("MainWindow", "Manage Schemas")
         )
+
+        self.tag_input.setPlaceholderText(_translate("MainWindow", "e.g. User"))
+        self.title_input.setPlaceholderText(
+            _translate("MainWindow", "e.g. My New API")
+        )
+        self.response_input.setPlaceholderText(
+            _translate("MainWindow", "e.g. 200 (HTTP Code)")
+        )
+        self.api_path_input.setPlaceholderText(
+            _translate("MainWindow", "e.g. /api/v1/user")
+        )
