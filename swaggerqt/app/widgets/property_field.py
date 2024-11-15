@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Any, Callable
 
 from PyQt6.QtWidgets import (
     QCheckBox,
@@ -38,3 +38,10 @@ class PropertyField(QWidget):
         layout.addWidget(self.destroy_btn)
 
         self.setLayout(layout)
+
+    def get_property_fields(self) -> dict[str, Any]:
+        return {
+            "property_name": self.property_name_input.text(),
+            "property_type": self.property_type_input.text(),
+            "is_required": self.is_required_checkbox.isChecked(),
+        }
