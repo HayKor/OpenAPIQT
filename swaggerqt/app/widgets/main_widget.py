@@ -15,6 +15,15 @@ class MainWidget(QWidget, Ui_MainWidget):
         self.manage_schemas_btn.clicked.connect(self.on_click_manage_schemas)
 
         self.schema_manager_window = SchemaManager()
+
+        # Setting initial schemas
+        self.request_schema_combo.addItems(
+            self.schema_manager_window.parser.get_all_types_list()
+        )
+        self.response_combo.addItems(
+            self.schema_manager_window.parser.get_all_types_list()
+        )
+
         self.generate_yaml_btn.clicked.connect(self.on_click_generate_yaml)
 
         logging.debug("Widget '%s' has initialized", self.__class__.__name__)

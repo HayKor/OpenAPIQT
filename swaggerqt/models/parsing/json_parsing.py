@@ -104,3 +104,14 @@ class JsonParser:
         logging.debug(f"Saved model with name {model_name}")
 
         return model
+
+    def get_all_types_dict(self) -> dict[str, Type]:
+        return self._type_dict
+
+    def get_all_types_list(self) -> list[str]:
+        # TODO: actually implement logic for `array` (array of what?)
+        types_list = list(self._type_dict.keys())
+
+        # For not
+        types_list.remove("array")
+        return types_list
