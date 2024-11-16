@@ -1,12 +1,12 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class Path(BaseModel):
     tags: list[str]
-    api_path: str
-    http_method: str
+    api_path: str = Field(min_length=1)
+    http_method: str = Field(min_length=1)
     request_schema: Optional[str] = None
     response_schema: Optional[str] = None
 
