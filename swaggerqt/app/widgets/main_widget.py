@@ -1,5 +1,6 @@
 import logging
 
+from app.list_models.path_list_model import PathListModel
 from app.ui.main_widget_ui import Ui_MainWidget
 from app.widgets.generate_yaml import GenerateYAML
 from app.widgets.schema_manager import SchemaManager
@@ -15,6 +16,9 @@ class MainWidget(QWidget, Ui_MainWidget):
         self.manage_schemas_btn.clicked.connect(self.on_click_manage_schemas)
 
         self.schema_manager_window = SchemaManager()
+
+        self.paths_model = PathListModel()
+        self.path_list.setModel(self.paths_model)
 
         # Setting initial schemas
         self.request_schema_combo.addItems(
