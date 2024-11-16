@@ -97,8 +97,6 @@ class JsonParser:
             fields.keys(),
         )
 
-        # TODO: save to DB or smth
-
         # Register the model
         self._type_dict[model_name] = model
         logging.debug(f"Saved model with name {model_name}")
@@ -112,6 +110,6 @@ class JsonParser:
         # TODO: actually implement logic for `array` (array of what?)
         types_list = list(self._type_dict.keys())
 
-        # For not
+        # For now
         types_list.remove("array")
         return types_list

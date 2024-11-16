@@ -12,10 +12,13 @@ class MainWidget(QWidget, Ui_MainWidget):
         super().__init__()
         self.setupUi(self)
 
+        # YAML generator window
         self.generate_yaml_window = GenerateYAML()
-        self.manage_schemas_btn.clicked.connect(self.on_click_manage_schemas)
+        self.generate_yaml_btn.clicked.connect(self.on_click_generate_yaml)
 
+        # Schema Manager window
         self.schema_manager_window = SchemaManager()
+        self.manage_schemas_btn.clicked.connect(self.on_click_manage_schemas)
 
         self.paths_model = PathListModel()
         self.path_list.setModel(self.paths_model)
@@ -27,8 +30,6 @@ class MainWidget(QWidget, Ui_MainWidget):
         self.response_combo.addItems(
             self.schema_manager_window.parser.get_all_types_list()
         )
-
-        self.generate_yaml_btn.clicked.connect(self.on_click_generate_yaml)
 
         logging.debug("Widget '%s' has initialized", self.__class__.__name__)
 
