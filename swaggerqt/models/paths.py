@@ -2,12 +2,13 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from .operation import Operation
-
 
 class Path(BaseModel):
-    put: Optional[Operation] = None
-    post: Optional[Operation] = None
-    get: Optional[Operation] = None
-    delete: Optional[Operation] = None
-    patch: Optional[Operation] = None
+    tags: list[str]
+    api_path: str
+    http_method: str
+    request_schema: Optional[str] = None
+    response_schema: Optional[str] = None
+
+    def __repr__(self) -> str:
+        return f"{self.http_method} {self.api_path}"
