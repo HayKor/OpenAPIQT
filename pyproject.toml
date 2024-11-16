@@ -38,3 +38,7 @@ multi_line_output = 3
 line-length = 80
 target-version = ['py312']
 
+[tool.ruff]
+ignore = ["E402", "F401"]
+
+target-version = "py310"
