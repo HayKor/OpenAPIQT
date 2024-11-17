@@ -41,7 +41,7 @@ class PropertyField(QWidget):
 
     def get_property_fields(self) -> dict[str, Any]:
         return {
-            "property_name": self.property_name_input.text(),
-            "property_type": self.property_type_input.text(),
+            "name": self.property_name_input.text(),
+            "type": self.property_type_input.text(),
             "is_required": self.is_required_checkbox.isChecked(),
         }
