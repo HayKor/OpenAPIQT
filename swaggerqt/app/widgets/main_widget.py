@@ -53,13 +53,20 @@ class MainWidget(QWidget, Ui_MainWidget):
 
     def on_click_add_path(self):
         api_path = self.api_path_input.text()
-        tag = self.tag_input.text()
+        tags = self.tag_input.text()
         http_method = self.http_method_combo.currentText()
         request_schema = self.request_schema_combo.currentText()
         response_schema = self.response_combo.currentText()
+        if not request_schema or not response_schema:
+            QMessageBox.warning(
+                self,
+                "Schema Error",
+                "Please choose a valid schema or make one.",
+            )
+            return
         try:
             path = Path(
-                tags=[tag],
+                tags=[tag.strip() for tag in tags.split(",")],
                 api_path=api_path,
                 http_method=http_method,
                 request_schema=request_schema,

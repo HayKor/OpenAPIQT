@@ -133,13 +133,15 @@ class Ui_MainWidget(object):
         )
         self.delete_path_btn.setText(_translate("MainWindow", "Delete Path"))
         self.add_path_btn.setText(_translate("MainWindow", "Add Path"))
-        self.label_7.setText(_translate("MainWindow", "Tag"))
+        self.label_7.setText(_translate("MainWindow", "Tags"))
         self.label_8.setText(_translate("MainWindow", "Paths:"))
         self.manage_schemas_btn.setText(
             _translate("MainWindow", "Manage Schemas")
         )
 
-        self.tag_input.setPlaceholderText(_translate("MainWindow", "e.g. User"))
+        self.tag_input.setPlaceholderText(
+            _translate("MainWindow", "e.g. User, Common")
+        )
         self.title_input.setPlaceholderText(
             _translate("MainWindow", "e.g. My New API")
         )
