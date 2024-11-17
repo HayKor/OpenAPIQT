@@ -21,13 +21,17 @@ class MainWidget(QWidget, Ui_MainWidget):
         self.schema_manager_window = SchemaManager()
         self.manage_schemas_btn.clicked.connect(self.on_click_manage_schemas)
 
-        # Setting initial schemas
-        self.request_schema_combo.addItems(
-            self.schema_manager_window.parser.get_all_types_list()
+        # # Setting initial schemas
+        # self.request_schema_combo.addItems(
+        #     self.schema_manager_window.parser.get_all_types_list()
+        # )
+        # self.response_combo.addItems(
+        #     self.schema_manager_window.parser.get_all_types_list()
+        # )
+        self.request_schema_combo.setModel(
+            self.schema_manager_window.schemas_model
         )
-        self.response_combo.addItems(
-            self.schema_manager_window.parser.get_all_types_list()
-        )
+        self.response_combo.setModel(self.schema_manager_window.schemas_model)
 
         #
         self.add_path_btn.clicked.connect(self.on_click_add_path)
@@ -63,6 +67,7 @@ class MainWidget(QWidget, Ui_MainWidget):
             )
             self.paths_model.add_path(path)
             self.clear_inputs()
+            logging.debug("Added new path: %s", path)
 
         except ValidationError:
             QMessageBox.warning(
