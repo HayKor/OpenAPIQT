@@ -76,7 +76,9 @@ class Ui_SchemaManager(object):
         self.label_2 = QtWidgets.QLabel(parent=SchemaManager)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
-        self.schemas_list = QtWidgets.QListWidget(parent=SchemaManager)
+
+        self.schemas_list = QtWidgets.QListView(parent=SchemaManager)
+
         self.schemas_list.setObjectName("schemas_list")
         self.verticalLayout.addWidget(self.schemas_list)
         self.add_schema_btn = QtWidgets.QPushButton(parent=SchemaManager)
