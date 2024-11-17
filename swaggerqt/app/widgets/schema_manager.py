@@ -29,6 +29,7 @@ class SchemaManager(QWidget, Ui_SchemaManager):
 
         #
         self.add_schema_btn.clicked.connect(self.on_click_add_schema)
+        self.delete_schema_btn.clicked.connect(self.on_click_delete_schema)
 
     def on_click_add_schema(self):
         schema_name = self.schema_name_input.text()
@@ -76,6 +77,15 @@ class SchemaManager(QWidget, Ui_SchemaManager):
         model = self.parser.parse_json_schema(schema_name, schema)
         self.schemas_model.add_schema(model.__name__)
         self.clear_inputs()
+
+    def on_click_delete_schema(self):
+        selected_indexes = self.schemas_list.selectedIndexes()
+        if selected_indexes:
+            self.schemas_model.remove_schema(selected_indexes[0])
+        else:
+            QMessageBox.warning(
+                self, "No Selection", "Please select a path to remove."
+            )
 
     def add_property_field(self):
         """Add a new property field."""
