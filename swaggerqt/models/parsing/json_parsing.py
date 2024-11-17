@@ -79,7 +79,7 @@ class JsonParser:
         for prop, schema in jschema.get("properties", {}).items():
             prop_type = self.parse_type(schema)
 
-            default_value = schema.get("default", ...)
+            default_value = schema.get("default", None)
             examples = schema.get("examples", None)
 
             fields[prop] = (
