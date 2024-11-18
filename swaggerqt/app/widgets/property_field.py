@@ -26,6 +26,7 @@ class PropertyField(QWidget):
 
         #
         self.destroy_btn.setFixedSize(20, 20)
+        self.is_required_checkbox.setChecked(True)
 
         # Set placeholder text
         self.property_name_input.setPlaceholderText("Property Name")
