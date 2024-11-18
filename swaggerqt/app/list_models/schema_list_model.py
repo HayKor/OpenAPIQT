@@ -33,7 +33,7 @@ class SchemaListModel(QAbstractListModel):
     def remove_schema(self, index: QModelIndex):
         if (
             index.isValid()
-            and not self.schemas[index.row()] in self._protected_items
+            and self.schemas[index.row()] not in self._protected_items
         ):
             self.beginRemoveRows(QModelIndex(), index.row(), index.row())
             self.schemas.pop(index.row())
