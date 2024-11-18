@@ -1,7 +1,9 @@
 from typing import Any, Callable
 
+from PyQt6.QtCore import QAbstractListModel
 from PyQt6.QtWidgets import (
     QCheckBox,
+    QComboBox,
     QHBoxLayout,
     QLineEdit,
     QPushButton,
@@ -10,7 +12,7 @@ from PyQt6.QtWidgets import (
 
 
 class PropertyField(QWidget):
-    def __init__(self, remove_callback: Callable):
+    def __init__(self, remove_callback: Callable, model: QAbstractListModel):
         super().__init__()
 
         # Create layout for the property field
@@ -18,7 +20,7 @@ class PropertyField(QWidget):
 
         # Create input fields for property name and type
         self.property_name_input = QLineEdit()
-        self.property_type_input = QLineEdit()
+        self.property_type_combo = QComboBox()
         self.is_required_checkbox = QCheckBox("*")
         self.destroy_btn = QPushButton("X")
 
@@ -27,13 +29,13 @@ class PropertyField(QWidget):
 
         # Set placeholder text
         self.property_name_input.setPlaceholderText("Property Name")
-        self.property_type_input.setPlaceholderText("Property Type")
+        self.property_type_combo.setModel(model)
 
         self.destroy_btn.clicked.connect(remove_callback)
 
         # Add inputs to layout
         layout.addWidget(self.property_name_input)
-        layout.addWidget(self.property_type_input)
+        layout.addWidget(self.property_type_combo)
         layout.addWidget(self.is_required_checkbox)
         layout.addWidget(self.destroy_btn)
 
@@ -42,6 +44,6 @@ class PropertyField(QWidget):
     def get_property_fields(self) -> dict[str, Any]:
         return {
             "name": self.property_name_input.text(),
-            "type": self.property_type_input.text(),
+            "type": self.property_type_combo.currentText(),
             "is_required": self.is_required_checkbox.isChecked(),
         }

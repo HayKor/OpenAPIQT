@@ -17,15 +17,15 @@ class SchemaManager(QWidget, Ui_SchemaManager):
         # Init parser
         self.parser = JsonParser()
 
-        # Initial field
-        self.add_property_field()
-
         # Connect when clicked
         self.add_property_btn.clicked.connect(self.add_property_field)
 
         #
         self.schemas_model = SchemaListModel(self.parser.get_all_types_list())
         self.schemas_list.setModel(self.schemas_model)
+
+        # Initial field
+        self.add_property_field()
 
         #
         self.add_schema_btn.clicked.connect(self.on_click_add_schema)
@@ -90,7 +90,8 @@ class SchemaManager(QWidget, Ui_SchemaManager):
     def add_property_field(self):
         """Add a new property field."""
         property_field = PropertyField(
-            remove_callback=self.remove_property_field
+            remove_callback=self.remove_property_field,
+            model=self.schemas_model,
         )
         self.property_container.addWidget(property_field)
 
