@@ -21,7 +21,7 @@ class MainWidget(QWidget, Ui_MainWidget):
         self.schema_manager_window = SchemaManager()
         self.manage_schemas_btn.clicked.connect(self.on_click_manage_schemas)
 
-        # Setting initial schemas
+        # Setting initial models
         self.request_schema_combo.setModel(
             self.schema_manager_window.schemas_model
         )
