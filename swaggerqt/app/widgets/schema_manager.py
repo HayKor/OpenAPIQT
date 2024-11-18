@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Type
+from typing import Any
 
 from app.list_models.schema_list_model import SchemaListModel
 from app.ui.schema_manager_ui import Ui_SchemaManager
@@ -24,7 +24,7 @@ class SchemaManager(QWidget, Ui_SchemaManager):
         self.add_property_btn.clicked.connect(self.add_property_field)
 
         #
-        self.schemas_model = SchemaListModel()
+        self.schemas_model = SchemaListModel(self.parser.get_all_types_list())
         self.schemas_list.setModel(self.schemas_model)
 
         #
@@ -89,7 +89,9 @@ class SchemaManager(QWidget, Ui_SchemaManager):
 
     def add_property_field(self):
         """Add a new property field."""
-        property_field = PropertyField(self.remove_property_field)
+        property_field = PropertyField(
+            remove_callback=self.remove_property_field
+        )
         self.property_container.addWidget(property_field)
 
     def remove_property_field(self):
