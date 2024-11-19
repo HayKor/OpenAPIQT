@@ -8,7 +8,8 @@ from pydantic.json_schema import GenerateJsonSchema
 class SkipDefs(GenerateJsonSchema):
     def generate(self, schema, mode="validation"):
         json_schema = super().generate(schema, mode=mode)
-        json_schema.pop("$defs")
+        if "$defs" in json_schema:
+            json_schema.pop("$defs")
         return json_schema
 
 
@@ -125,7 +126,8 @@ class JsonParser:
             model = self._type_dict[model_name]
             if issubclass(model, BaseModel) or issubclass(model, RootModel):
                 schema = model.model_json_schema(
-                    ref_template="#/components/schemas/{model}"
+                    ref_template="#/components/schemas/{model}",
+                    schema_generator=SkipDefs,
                 )
             else:
                 root_model = RootModel[model]
@@ -137,12 +139,12 @@ class JsonParser:
             return schema
 
         except KeyError as e:
-            logging.debug(
+            logging.error(
                 "Couldn't get model with name %s, error: %q", model_name, e
             )
 
         except Exception as e:
-            logging.debug(
+            logging.error(
                 "Something unexpected when processing model_name %s, error: %q",
                 model_name,
                 e,
