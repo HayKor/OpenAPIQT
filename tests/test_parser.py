@@ -1,3 +1,5 @@
+import json
+
 from swaggerqt.models.parsing import JsonParser
 
 
@@ -40,3 +42,7 @@ def test_parser():
         },
     }
     assert parser.parse_type(user_array_schema) == list[User]
+
+    assert User.model_json_schema(
+        ref_template="#/components/schemas/{model}"
+    ) == parser.get_json_schema("User", pop_title=False)

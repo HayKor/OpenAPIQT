@@ -8,7 +8,8 @@ from pydantic.json_schema import GenerateJsonSchema
 class SkipDefs(GenerateJsonSchema):
     def generate(self, schema, mode="validation"):
         json_schema = super().generate(schema, mode=mode)
-        json_schema.pop("$defs")
+        if "$defs" in json_schema:
+            json_schema.pop("$defs")
         return json_schema
 
 
@@ -79,7 +80,10 @@ class JsonParser:
         for prop, schema in jschema.get("properties", {}).items():
             prop_type = self.parse_type(schema)
 
-            default_value = schema.get("default", None)
+            if prop in jschema.get("required", []):
+                default_value = ...
+            else:
+                default_value = schema.get("default", None)
             examples = schema.get("examples", None)
 
             fields[prop] = (
@@ -113,3 +117,37 @@ class JsonParser:
         # For now
         types_list.remove("array")
         return types_list
+
+    def get_json_schema(
+        self, model_name: str, pop_title: bool = True
+    ) -> dict[str, Any]:
+        """Return empty dict when error occurs"""
+        try:
+            model = self._type_dict[model_name]
+            if issubclass(model, BaseModel) or issubclass(model, RootModel):
+                schema = model.model_json_schema(
+                    ref_template="#/components/schemas/{model}",
+                    schema_generator=SkipDefs,
+                )
+            else:
+                root_model = RootModel[model]
+                schema = root_model.model_json_schema(
+                    ref_template="#/components/schemas/{model}"
+                )
+            if pop_title:
+                schema.pop("title")
+            return schema
+
+        except KeyError as e:
+            logging.error(
+                "Couldn't get model with name %s, error: %q", model_name, e
+            )
+
+        except Exception as e:
+            logging.error(
+                "Something unexpected when processing model_name %s, error: %q",
+                model_name,
+                e,
+            )
+
+        return {}

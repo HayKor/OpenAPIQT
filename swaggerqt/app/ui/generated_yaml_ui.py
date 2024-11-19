@@ -22,7 +22,7 @@ class Ui_GenerateYAML(object):
         self.verticalLayout.addWidget(self.label)
         self.plainTextEdit = QtWidgets.QPlainTextEdit(parent=Form)
         self.plainTextEdit.setObjectName("plainTextEdit")
-        self.plainTextEdit.setEnabled(False)
+        self.plainTextEdit.setReadOnly(True)
         self.verticalLayout.addWidget(self.plainTextEdit)
         self.verticalLayout_2.addLayout(self.verticalLayout)
 
@@ -31,5 +31,7 @@ class Ui_GenerateYAML(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("PyQT Generate YAML", "PyQT Generate YAML"))
+        Form.setWindowTitle(
+            _translate("PyQT Generate YAML", "PyQT Generate YAML")
+        )
         self.label.setText(_translate("Form", "Generated YAML:"))
