@@ -1,5 +1,6 @@
 import logging
 
+import yaml
 from app.ui.main_widget_ui import Ui_MainWidget
 from app.widgets.generate_yaml import GenerateYAML
 from app.widgets.schema_manager import SchemaManager
@@ -33,8 +34,9 @@ class MainWidget(QWidget, Ui_MainWidget):
 
         logging.debug("Widget '%s' has initialized", self.__class__.__name__)
 
-    def on_click_generate_yaml(self):
-        # TODO: actually implement some logic
+    def on_click_generate_yaml(self, yaml: str):
+        self.generate_swagger_yaml()
+
         self.generate_yaml_window.show()
 
     def on_click_manage_schemas(self):
@@ -83,3 +85,86 @@ class MainWidget(QWidget, Ui_MainWidget):
             QMessageBox.warning(
                 self, "No Selection", "Please select a path to remove."
             )
+
+    def generate_swagger_yaml(self):
+        try:
+            # Create base Swagger/OpenAPI structure
+            swagger_dict = {
+                "openapi": "3.0.0",
+                "info": {
+                    "title": self.title_input.text() or "My API",
+                    "version": "1.0.0",
+                    "description": "",
+                },
+                "paths": {},
+                "components": {"schemas": {}},
+            }
+
+            # Add Paths
+            for path in self.paths_model.paths:
+                path_dict = {
+                    path.http_method.lower(): {
+                        "tags": path.tags,
+                        "requestBody": {
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "$ref": f"#/components/schemas/{path.request_schema}"
+                                    }
+                                }
+                            }
+                        },
+                        "responses": {
+                            "200": {
+                                "description": "Successful response",
+                                "content": {
+                                    "application/json": {
+                                        "schema": {
+                                            "$ref": f"#/components/schemas/{path.response_schema}"
+                                        }
+                                    }
+                                },
+                            }
+                        },
+                    }
+                }
+                swagger_dict["paths"][path.api_path] = path_dict
+                logging.debug(
+                    "Added new path to Generate YAML window: %s", path.api_path
+                )
+
+            # Add Schemas
+            for schema_name in self.schema_manager_window.schemas_model.schemas:
+                schema = self.schema_manager_window.parser.get_json_schema(
+                    schema_name
+                )
+                if schema:
+                    swagger_dict["components"]["schemas"][schema_name] = schema
+
+                    logging.debug(
+                        "Added new schema to GenerateYAML: %s", schema_name
+                    )
+
+            # Convert to YAML
+            self.swagger_yaml = yaml.dump(
+                swagger_dict,
+                default_flow_style=False,
+                sort_keys=False,
+                indent=2,
+            )
+
+            # Display YAML in text area
+            self.generate_yaml_window.plainTextEdit.setPlainText(
+                self.swagger_yaml
+            )
+
+            return swagger_dict
+
+        except Exception as e:
+            QMessageBox.warning(
+                self,
+                "YAML Generation Error",
+                f"Failed to generate YAML: {str(e)}",
+            )
+            logging.error(f"YAML generation error: {e}")
+            return None
