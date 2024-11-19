@@ -31,7 +31,9 @@ class SchemaManager(QWidget, Ui_SchemaManager):
         self.add_schema_btn.clicked.connect(self.on_click_add_schema)
         self.delete_schema_btn.clicked.connect(self.on_click_delete_schema)
 
+    # TODO: I dont like this code....
     def on_click_add_schema(self):
+        """Худшая функция ever"""
         schema_name = self.schema_name_input.text()
         if not schema_name:
             QMessageBox.warning(
