@@ -16,6 +16,9 @@ build:
 		--name=$(OUTPUT_NAME) \
 		$(SCRIPT)
 
+# Windows command to run to build
+# pyinstaller --name="openapiqt" --onefile --add-data="openapiqt:." --hidden-import=pydantic --hidden-import=pydantic.tools --hidden-import=PyQt6.QtCore --hidden-import=PyQt6.QtWidgets --hidden-import=openapiqt.app --hidden-import=openapiqt.models --hidden-import=openapiqt.settings --hidden-import=yaml --windowed --noconsole openapiqt\main.py
+
 # Clean target
 clean:
 	$(PYINSTALLER) --clean
