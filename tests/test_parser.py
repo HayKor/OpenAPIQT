@@ -1,6 +1,6 @@
 import json
 
-from swaggerqt.models.parsing import JsonParser
+from openapiqt.models.parsing import JsonParser
 
 
 def test_parser():
